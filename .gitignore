@@ -1,0 +1,12 @@
+.sass-cache/
+node_modules/
+vendor/
+
+.env
+
+storage/cache/*
+storage/logs/*
+storage/uploads/*
+!storage/cache/.gitkeep
+!storage/logs/.gitkeep
+!storage/uploads/.gitkeep

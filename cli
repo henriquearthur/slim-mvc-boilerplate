@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+require __DIR__ . '/bootstrap/settings.php';
+
+use Symfony\Component\Console\Application;
+
+use Console\Command\ExampleCommand;
+
+$commands = [
+    new ExampleCommand()
+];
+
+$application = new Application();
+
+foreach ($commands as $command) {
+    $application->add($command);
+}
+
+$application->run();
