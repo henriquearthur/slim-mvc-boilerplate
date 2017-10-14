@@ -4,13 +4,30 @@ namespace App\Middleware;
 
 class TrailingSlashMiddleware
 {
+    /**
+     * Slim DI Container
+     * @var \Slim\Container
+     */
     protected $ci;
 
-    public function __construct($ci)
-    {
+    /**
+     * Constructor
+     *
+     * @param \Slim\Container $ci Slim DI Container
+     */
+    public function __construct($ci) {
         $this->ci = $ci;
     }
 
+    /**
+     * Redirect/rewrite all URLs that end in a / to the non-trailing / equivalent
+     *
+     * @param  \Psr\Http\Message\ServerRequestInterface $request  PSR7 request
+     * @param  \Psr\Http\Message\ResponseInterface      $response PSR7 response
+     * @param  callable                                 $next     Next middleware
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function __invoke($request, $response, $next)
     {
         $uri = $request->getUri();

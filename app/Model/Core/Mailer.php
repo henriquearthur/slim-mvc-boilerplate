@@ -4,17 +4,36 @@ namespace App\Model\Core;
 
 class Mailer
 {
+    /**
+     * Slim DI Container
+     * @var \Slim\Container
+     */
     protected $ci;
 
+    /**
+     * Mail settings
+     * @var array
+     */
     private $data;
 
-    public function __construct($ci)
-    {
+    /**
+     * Constructor
+     * Get mail settings
+     *
+     * @param \Slim\Container $ci Slim DI Container
+     */
+    public function __construct($ci) {
         $this->ci = $ci;
 
         $this->data = $this->ci->get('settings')['mail'];
     }
 
+    /**
+     * Configure PHPMailer according to environment and application requirements
+     *
+     * @param  \PHPMailer $mailer PHPMailer instance to be configured
+     * @return \PHPMailer         PHPMailer instance configured
+     */
     public function configure($mailer)
     {
         if ($this->validateSmtp()) {
@@ -33,6 +52,11 @@ class Mailer
         return $mailer;
     }
 
+    /**
+     * Validate SMTP information
+     *
+     * @return boolean valid information or not
+     */
     private function validateSmtp()
     {
         if (empty($this->data['smtp']['host'])) {
@@ -62,6 +86,10 @@ class Mailer
         return true;
     }
 
+    /**
+     * Get PHPMailer instance properly configured
+     * @return \PHPMailer
+     */
     public function getMailer()
     {
         $mailer = new \PHPMailer;

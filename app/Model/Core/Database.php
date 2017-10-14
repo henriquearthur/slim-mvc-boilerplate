@@ -4,8 +4,18 @@ namespace App\Model\Core;
 
 class Database extends \PDO
 {
+
+    /**
+     * Slim DI Container
+     * @var \Slim\Container
+     */
     protected $ci;
 
+    /**
+     * Constructor
+     *
+     * @param \Slim\Container $ci Slim DI Container
+     */
     public function __construct($ci, string $dsn, string $username, string $password, array $options = array())
     {
         $this->ci = $ci;
@@ -22,6 +32,14 @@ class Database extends \PDO
         }
     }
 
+    /**
+     * Insert row in a table
+     *
+     * @param  string $table table name
+     * @param  array  $data  row columns
+     *
+     * @return boolean       success on insert
+     */
     public function insert(string $table, array $data)
     {
         if (empty($table)) {
@@ -78,6 +96,15 @@ class Database extends \PDO
         return true;
     }
 
+    /**
+     * Update row in a table
+     *
+     * @param  string $table  table name
+     * @param  array  $data   row columns
+     * @param  array  $where  conditions
+     *
+     * @return boolean        success on update
+     */
     public function update(string $table, array $data, array $where = array())
     {
         if (empty($table)) {
@@ -165,6 +192,14 @@ class Database extends \PDO
         return true;
     }
 
+    /**
+     * Delete row in a table
+     *
+     * @param  string $table  table name
+     * @param  array  $where  conditions
+     *
+     * @return boolean        success on delete
+     */
     public function delete(string $table, array $where = array())
     {
         $conditionsCol = array();
@@ -209,11 +244,24 @@ class Database extends \PDO
         return true;
     }
 
+    /**
+     * Get ID of last inserted row
+     * @return [type] [description]
+     */
     public function getLastInsertId()
     {
         return $this->lastInsertId();
     }
 
+    /**
+     * Get value from $column in a $table with a specific $id
+     *
+     * @param  string  $column column name
+     * @param  string  $table  table name
+     * @param  integer $id    row id (primary key)
+     *
+     * @return mixed          value
+     */
     public function getValueFrom($column, $table, $id)
     {
         $sql = $this->prepare("SELECT {$column} FROM {$table} WHERE id = ?");

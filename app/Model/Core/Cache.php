@@ -4,6 +4,10 @@ namespace App\Core\Model;
 
 class Cache
 {
+    /**
+     * Slim DI Container
+     * @var \Slim\Container
+     */
     protected $ci;
 
     /**
@@ -26,6 +30,11 @@ class Cache
      */
     private $openedContent = [];
 
+    /**
+     * Constructor
+     *
+     * @param \Slim\Container $ci Slim DI Container
+     */
     public function __construct($ci)
     {
         $this->ci = $ci;
