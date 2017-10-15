@@ -36,7 +36,7 @@ class NotFoundHandler extends NotFound
     {
         parent::__invoke($request, $response);
 
-        $this->ci->view->render($response, 'error/404.html.twig', $viewData);
+        $this->ci->view->render($response, 'errors/404.html.twig');
         return $response->withStatus(404);
     }
 }

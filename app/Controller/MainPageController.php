@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-class HomeController
+class MainPageController
 {
     /**
      * Slim DI Container

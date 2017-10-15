@@ -1,13 +1,13 @@
 <?php
 
-use App\Controller\HomeController;
+use App\Controller\MainPageController;
 
 use App\Middleware\AjaxMiddleware;
 
 /**
  * Site routes
  */
-$app->get('/', HomeController::class . ':index')->setName('index');
+$app->get('/', MainPageController::class . ':index')->setName('index');
 
 /**
  * Ajax requests

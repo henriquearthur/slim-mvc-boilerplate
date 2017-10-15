@@ -28,8 +28,6 @@ $config['db']['username'] = getenv('DB_USERNAME');
 $config['db']['password'] = getenv('DB_PASSWORD');
 $config['db']['database'] = getenv('DB_DATABASE');
 
-$config['mail']['from_address']     = getenv('MAIL_FROM_ADDRESS');
-$config['mail']['from_name']        = getenv('MAIL_FROM_NAME');
 $config['mail']['smtp']['host']     = getenv('MAIL_SMTP_HOST');
 $config['mail']['smtp']['user']     = getenv('MAIL_SMTP_USER');
 $config['mail']['smtp']['password'] = getenv('MAIL_SMTP_PASSWORD');
