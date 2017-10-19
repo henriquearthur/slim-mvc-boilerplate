@@ -2,34 +2,32 @@
 
 namespace App\Controller;
 
-class MainPageController
+class IndexController
 {
     /**
-     * Slim DI Container
+     * Dependency container provided by Slim
      * @var \Slim\Container
      */
-    protected $ci;
+    protected $container;
 
     /**
-     * Constructor
-     *
-     * @param \Slim\Container $ci Slim DI Container
+     * Save dependency container
+     * @param \Slim\App $app slim application
      */
-    public function __construct($ci) {
-        $this->ci = $ci;
+    public function __construct($container)
+    {
+        $this->container = $container;
     }
 
     /**
      * This method is called when the user enters the `/` route
-     *
      * @param  \Psr\Http\Message\ServerRequestInterface $request   PSR7 request
      * @param  \Psr\Http\Message\ResponseInterface      $response  PSR7 response
      * @param  array                                    $args      Route parameters
-     *
      * @return \Psr\Http\Message\ResponseInterface
      */
     public function index($request, $response, $args)
     {
-        return $this->ci->view->render($response, 'index.html.twig');
+        return $this->container->twig->render($response, "index.html.twig");
     }
 }

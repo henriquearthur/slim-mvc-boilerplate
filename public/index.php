@@ -1,15 +1,19 @@
 <?php
 
-session_start();
+/**
+ * Slim Framework MVC Boilerplate
+ *
+ * This file is the starting point of your application.
+ *
+ * It is responsible for bootstrapping the Slim application itself, dependencies on Dependency-Injection Container,
+ * middlewares and routes.
+ *
+ * You can find more information on Bootstrap\Application class.
+ */
 
 require __DIR__ . '/../vendor/autoload.php';
 
-require __DIR__ . '/../bootstrap/settings.php';
+$application = new Bootstrap\Application;
 
-$app = new Slim\App(["settings" => $config]);
-
-require __DIR__ . '/../bootstrap/container.php';
-require __DIR__ . '/../bootstrap/middlewares.php';
-require __DIR__ . '/../bootstrap/routes.php';
-
+$app = $application->getAppInstance();
 $app->run();

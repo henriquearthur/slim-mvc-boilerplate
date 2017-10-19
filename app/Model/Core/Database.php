@@ -4,52 +4,20 @@ namespace App\Model\Core;
 
 class Database extends \PDO
 {
-
-    /**
-     * Slim DI Container
-     * @var \Slim\Container
-     */
-    protected $ci;
-
-    /**
-     * Constructor
-     *
-     * @param \Slim\Container $ci Slim DI Container
-     */
-    public function __construct($ci, string $dsn, string $username, string $password, array $options = array())
-    {
-        $this->ci = $ci;
-
-        try {
-            parent::__construct($dsn, $username, $password, $options);
-        } catch (\PDOException $e) {
-            $error = $e->getMessage();
-
-            $this->ci->appLogger->critical('Unable to connect to Database. PDO Error: ' . $error);
-            trigger_error($error);
-
-            return false;
-        }
-    }
-
     /**
      * Insert row in a table
-     *
      * @param  string $table table name
      * @param  array  $data  row columns
-     *
      * @return boolean       success on insert
      */
     public function insert(string $table, array $data)
     {
         if (empty($table)) {
-            $this->ci->appLogger->critical("Table name not provided.");
-            return false;
+            throw new \Exception("Table name not provided.");
         }
 
         if (empty($data)) {
-            $this->ci->appLogger->critical("Data to be inserted on the table not provided.");
-            return false;
+            throw new \Exception("Data to be inserted on the table not provided.");
         }
 
         $columns = array();
@@ -63,8 +31,7 @@ class Database extends \PDO
         }
 
         if (count($columns) != count($values)) {
-            $this->ci->appLogger->critical("The count of columns and its values are not equal.");
-            return false;
+            throw new \Exception("The count of columns and its values are not equal.");
         }
 
         $columnsQuery = implode(",", $columns);
@@ -89,8 +56,7 @@ class Database extends \PDO
         $exec = $sql->execute();
 
         if (!$exec) {
-            $this->ci->appLogger->error($this->errorInfo());
-            return false;
+            throw new \Exception($this->errorInfo());
         }
 
         return true;
@@ -98,23 +64,19 @@ class Database extends \PDO
 
     /**
      * Update row in a table
-     *
      * @param  string $table  table name
      * @param  array  $data   row columns
      * @param  array  $where  conditions
-     *
      * @return boolean        success on update
      */
     public function update(string $table, array $data, array $where = array())
     {
         if (empty($table)) {
-            $this->ci->appLogger->critical("Table name not provided.");
-            return false;
+            throw new \Exception("Table name not provided.");
         }
 
         if (empty($data)) {
-            $this->ci->appLogger->critical("Data to be updated on the table not provided.");
-            return false;
+            throw new \Exception("Data to be updated on the table not provided.");
         }
 
         $columns = array();
@@ -135,13 +97,11 @@ class Database extends \PDO
         }
 
         if (count($columns) != count($values)) {
-            $this->ci->appLogger->critical("The count of columns and its values from SET block are not equal.");
-            return false;
+            throw new \Exception("The count of columns and its values from SET block are not equal.");
         }
 
         if (count($conditionsCol) != count($conditionsVal)) {
-            $this->ci->appLogger->critical("The count of columns and its values from WHERE block are not equal.");
-            return false;
+            throw new \Exception("The count of columns and its values from WHERE block are not equal.");
         }
 
         $i = 0;
@@ -185,8 +145,7 @@ class Database extends \PDO
         $exec = $sql->execute();
 
         if (!$exec) {
-            $this->ci->appLogger->error($this->errorInfo());
-            return false;
+            throw new \Exception($this->errorInfo());
         }
 
         return true;
@@ -194,10 +153,8 @@ class Database extends \PDO
 
     /**
      * Delete row in a table
-     *
      * @param  string $table  table name
      * @param  array  $where  conditions
-     *
      * @return boolean        success on delete
      */
     public function delete(string $table, array $where = array())
@@ -213,8 +170,7 @@ class Database extends \PDO
         }
 
         if (count($conditionsCol) != count($conditionsVal)) {
-            $this->ci->appLogger->critical("The count of columns and its values from WHERE block are not equal.");
-            return false;
+            throw new \Exception("The count of columns and its values from WHERE block are not equal.");
         }
 
         $whereQuery = '';
@@ -237,8 +193,7 @@ class Database extends \PDO
         $exec = $sql->execute();
 
         if (!$exec) {
-            $this->ci->appLogger->error($this->errorInfo());
-            return false;
+            throw new \Exception($this->errorInfo());
         }
 
         return true;
@@ -246,7 +201,7 @@ class Database extends \PDO
 
     /**
      * Get ID of last inserted row
-     * @return [type] [description]
+     * @return string row ID of last inserted row
      */
     public function getLastInsertId()
     {
@@ -255,11 +210,9 @@ class Database extends \PDO
 
     /**
      * Get value from $column in a $table with a specific $id
-     *
      * @param  string  $column column name
      * @param  string  $table  table name
      * @param  integer $id    row id (primary key)
-     *
      * @return mixed          value
      */
     public function getValueFrom($column, $table, $id)

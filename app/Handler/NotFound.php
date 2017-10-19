@@ -2,41 +2,39 @@
 
 namespace App\Handler;
 
-use Slim\Handlers\NotFound;
+use Slim\Handlers\NotFound as SlimNotFoundHandler;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class NotFoundHandler extends NotFound
+class NotFound extends SlimNotFoundHandler
 {
     /**
-     * Slim DI Container
+     * Dependency container provided by Slim
      * @var \Slim\Container
      */
-    protected $ci;
+    protected $container;
 
     /**
-     * Constructor
-     *
-     * @param \Slim\Container $ci Slim DI Container
+     * Save dependency container
+     * @param \Slim\App $app slim application
      */
-    public function __construct($ci) {
-        $this->ci = $ci;
+    public function __construct($container)
+    {
+        $this->container = $container;
     }
 
     /**
-     * Renders 404 error template
-     *
+     * Middleware processing
      * @param  \Psr\Http\Message\ServerRequestInterface $request   PSR7 request
      * @param  \Psr\Http\Message\ResponseInterface      $response  PSR7 response
-     *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @return array
      */
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
         parent::__invoke($request, $response);
 
-        $this->ci->view->render($response, 'errors/404.html.twig');
+        $this->container->twig->render($response, 'errors/404.html.twig');
         return $response->withStatus(404);
     }
 }

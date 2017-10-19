@@ -5,32 +5,30 @@ namespace App\Model\Core;
 class Mailer
 {
     /**
-     * Slim DI Container
+     * Dependency container provided by Slim
      * @var \Slim\Container
      */
-    protected $ci;
+    protected $container;
 
     /**
      * Mail settings
      * @var array
      */
-    private $data;
+    protected $data;
 
     /**
-     * Constructor
-     * Get mail settings
-     *
-     * @param \Slim\Container $ci Slim DI Container
+     * Save dependency container and mail settings
+     * @param \Slim\App $app slim application
      */
-    public function __construct($ci) {
-        $this->ci = $ci;
+    public function __construct($container)
+    {
+        $this->container = $container;
 
         $this->data = $this->ci->get('settings')['mail'];
     }
 
     /**
      * Configure PHPMailer according to environment and application requirements
-     *
      * @param  \PHPMailer $mailer PHPMailer instance to be configured
      * @return \PHPMailer         PHPMailer instance configured
      */
@@ -46,7 +44,7 @@ class Mailer
             $mailer->SMTPSecure = $this->data['smtp']['protocol'];
             $mailer->Port       = $this->data['smtp']['port'];
         } else {
-            $this->ci->appLogger->warning("SMTP is not enabled. Sending mail can work better if SMTP is properly configured.");
+            $this->container->monolog->warning("SMTP is not enabled. Sending mail can work better if SMTP is properly configured.");
         }
 
         return $mailer;
@@ -54,7 +52,6 @@ class Mailer
 
     /**
      * Validate SMTP information
-     *
      * @return boolean valid information or not
      */
     private function validateSmtp()

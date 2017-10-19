@@ -5,28 +5,27 @@ namespace App\Middleware;
 class ErrorMiddleware
 {
     /**
-     * Slim DI Container
+     * Dependency container provided by Slim
      * @var \Slim\Container
      */
-    protected $ci;
+    protected $container;
 
     /**
-     * Constructor
-     *
-     * @param \Slim\Container $ci Slim DI Container
+     * Save dependency container
+     * @param \Slim\App $app slim application
      */
-    public function __construct($ci) {
-        $this->ci = $ci;
+    public function __construct($container)
+    {
+        $this->container = $container;
     }
 
     /**
+     * Middleware processing
      * Check for HTTP errors on processed response and render respective view
-     *
-     * @param  \Psr\Http\Message\ServerRequestInterface $request  PSR7 request
-     * @param  \Psr\Http\Message\ResponseInterface      $response PSR7 response
-     * @param  callable                                 $next     Next middleware
-     *
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param  \Psr\Http\Message\ServerRequestInterface $request   PSR7 request
+     * @param  \Psr\Http\Message\ResponseInterface      $response  PSR7 response
+     * @param  callable                                 $next      Next middleware
+     * @return array
      */
     public function __invoke($request, $response, $next)
     {
@@ -34,9 +33,9 @@ class ErrorMiddleware
 
         if ($response->getBody()->getSize() == 0) {
             if ($response->getStatusCode() === 403) {
-                return $this->ci->view->render($response, 'errors/403.html.twig');
+                return $this->container->twig->render($response, 'errors/403.html.twig');
             } else if ($response->getStatusCode() === 404) {
-                return $this->ci->view->render($response, 'errors/404.html.twig');
+                return $this->container->twig->render($response, 'errors/404.html.twig');
             }
         }
 
