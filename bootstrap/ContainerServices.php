@@ -366,7 +366,7 @@ class ContainerServices
     public function registerNotFoundHandler()
     {
         $this->registerService('notFoundHandler', function () {
-            return new App\Handler\NotFound($this->container, function ($request, $response) {
+            return new \App\Handler\NotFound($this->container, function ($request, $response) {
                 return $this->container['response']->withStatus(404);
             });
         });
