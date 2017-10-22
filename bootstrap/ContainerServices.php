@@ -120,9 +120,9 @@ class ContainerServices
                 $data['password']
             );
 
-            $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $database->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $database->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            $database->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            $database->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
+            $database->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
             $database->exec("set names utf8");
 
             return $database;
