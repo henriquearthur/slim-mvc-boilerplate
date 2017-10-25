@@ -6,7 +6,7 @@ This is a boilerplate using [Slim Framework](http://slimframework.com), MVC patt
 
 ## The goal
 
-As described on Slim documentation, you don't always need a kitchen-sink solution like [Symfony](http://symfony.com) or [Laravel](http://symfony.com). Slim provides a minimal set of tools to build your application, which is great for APIs, but you miss some tools if you are using Slim to build something else, like a website with many features.
+As described on Slim documentation, you don't always need a kitchen-sink solution like [Symfony](https://symfony.com) or [Laravel](https://laravel.com). Slim provides a minimal set of tools to build your application, which is great for APIs, but you miss some tools if you are using Slim to build something else, like a website with many features.
 
 However, Slim also provides easy methods to use third-party libraries on your code. Almost everything you need is out there - Cache, CSRF protection, Database management, Logging, Mail solution, Templates and more.
 
