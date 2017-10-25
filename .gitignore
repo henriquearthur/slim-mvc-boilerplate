@@ -2,6 +2,3 @@ node_modules/
 vendor/
 
 .env
-
-storage/cache/*
-storage/logs/*
