@@ -32,7 +32,7 @@ class Mailer
      * @param  \PHPMailer $mailer PHPMailer instance to be configured
      * @return \PHPMailer         PHPMailer instance configured
      */
-    public function configure($mailer)
+    private function configure($mailer)
     {
         if ($this->validateSmtp()) {
             $mailer->isSmtp();
