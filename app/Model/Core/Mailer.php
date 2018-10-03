@@ -24,7 +24,7 @@ class Mailer
     {
         $this->container = $container;
 
-        $this->data = $this->ci->get('settings')['mail'];
+        $this->data = $this->container->get('settings')['mail'];
     }
 
     /**
