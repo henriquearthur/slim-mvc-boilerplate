@@ -1,6 +1,6 @@
 # Slim Framework MVC Boilerplate
 
-This is a boilerplate using [Slim Framework](http://slimframework.com), MVC pattern and third-party libraries.
+This is a boilerplate using [Slim Framework](https://slimframework.com), MVC pattern and third-party libraries.
 
 **Documentation is still in progress. Hold on.**
 
